@@ -22,8 +22,8 @@ images:
     channel: date
     sort: semver
     tag_regex: ^20[0-9]{2}-[0-9]{2}-[0-9]{2}[a-z]?$
-    version_regex: ^(?P<year>20[0-9]{2})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})[a-z]?$
-    version_template: '{year}.{month}.{day}'
+    version_regex: '^(?P<version>20[0-9]{2})-(?P<month>[0-9]{2})-(?P<day>[0-9]{2})[a-z]?$'
+    version_template: '{version}.{month}.{day}'
     delivery:
       mode: mirror
       require_digest_match: true
