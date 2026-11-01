@@ -1,0 +1,35 @@
+application:
+  subdomain: dokuwiki
+  multi_instance: false
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://dokuwiki:8080/
+
+services:
+  dokuwiki:
+    # upstream: dokuwiki/dokuwiki:2026-07-14c
+    image: docker.1ms.run/dokuwiki/dokuwiki:2026-07-14c
+    environment:
+      - PHP_TIMEZONE=Asia/Shanghai
+    binds:
+      - /lzcapp/var/storage:/storage
+
+usage: |
+  DokuWiki 是纯文件维基：页面存成文本文件，不需要数据库，支持版本历史和权限控制。
+
+  使用方法：
+  1. 打开应用，进入 install.php 完成初始设置（设置维基名称、管理员账号和访问策略）。
+  2. 设置完成后删除 install.php（可用应用内文件管理或重新打包），避免被重复初始化。
+  3. 之后即可新建页面、编辑内容，语法接近 Markdown 的 DokuWiki 格式。
+
+  数据与安全：
+  - 页面、附件、配置和版本历史都保存在 /lzcapp/var/storage，卸载应用会一并删除，请定期备份。
+  - 本包不预置账号或默认口令，管理员由你在首次安装向导里创建。
+  - 应用经懒猫入口鉴权访问，未开放无需登录的接口路径。
+
+  说明：
+  - 首次安装完成后建议把 ACL 设为「关闭公共注册」，只允许管理员建号。
+  - 插件需自行安装，本包不含任何第三方插件。
+  - 未做真机验证：安装向导、页面编辑、版本历史、附件上传与权限控制均未在设备上实测。
